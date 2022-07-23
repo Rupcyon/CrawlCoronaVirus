@@ -62,16 +62,11 @@ class CoronaVirusSpider(object):
                 one_day["provinceName"] = country["provinceName"]
                 one_day['countryShortCode'] = country['countryShortCode']
                 # append整体放列表，extend元素放列表
-
             corona_virus.extend(statistics_data)
-
-
-
         self.save(corona_virus, 'D:\PythonProject\Pachong\corona_virus.json')
 
     def run(self):
         self.crawl_corona_virus()
-
 
 if __name__ == '__main__':
     spider = CoronaVirusSpider()
