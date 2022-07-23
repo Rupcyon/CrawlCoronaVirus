@@ -32,7 +32,6 @@ class CoronaVirusSpider(object):
         data = json.loads(json_str)
         return data
 
-
     def save(self, data, path):
         with open(path, 'w', encoding='utf8') as fp:
             json.dump(data, fp, ensure_ascii=False)
@@ -53,7 +52,7 @@ class CoronaVirusSpider(object):
         with open('D:\PythonProject\Pachong\last_day_corona_virus.json', encoding='utf8') as fp:
             last_day_corona_virus = json.load(fp)  # last_last_day_corona_virus转化为python文件
         corona_virus = []
-        for country in tqdm(last_day_corona_virus[0:10],'近10天各国疫情'):
+        for country in tqdm(last_day_corona_virus,'世界各国近10天疫情数据'):
             statistics_data_url = country['statisticsData']
             statistics_data_json_str = self.get_content_from_url(statistics_data_url)
             statistics_data = json.loads(statistics_data_json_str)['data']
@@ -69,7 +68,7 @@ class CoronaVirusSpider(object):
         home_page = self.get_content_from_url(self.home_url)
         lats_day_data_of_china = self.parse_home_page(home_page,'getAreaStat')#python类型数据
         corona_virus_China = []
-        for province in tqdm(lats_day_data_of_china,'中国近10天疫情数据'):
+        for province in tqdm(lats_day_data_of_china,'中国各省近10天疫情数据'):
             statistics_data_url_China = province['statisticsData']
             statistics_data_China = self.get_content_from_url(statistics_data_url_China)
             statistics_data_China = json.loads(statistics_data_China)['data']
@@ -79,17 +78,9 @@ class CoronaVirusSpider(object):
                 one_day['provinceName'] = province['provinceName']
         self.save(corona_virus_China,'./last10Days_Corona_virus_China')
 
-
-
-
-
-
-
     def run(self):
         self.crawl_corona_virus()
         self.crawl_corona_virus_of_China()
-
-
 
 if __name__ == '__main__':
     spider = CoronaVirusSpider()
